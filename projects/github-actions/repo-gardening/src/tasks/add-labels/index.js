@@ -319,9 +319,9 @@ async function addLabels( payload, octokit ) {
 		return;
 	}
 
-	if ( labels.length > 2 ) {
-		debug( 'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first 100' );
-		labels = labels.splice( 2 );
+	if ( labels.length > 1 ) {
+		debug( 'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first 90' );
+		labels = labels.splice( 1 );
 	}
 
 	debug( `add-labels: Adding labels ${ labels } to PR #${ number }` );
