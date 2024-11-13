@@ -71,7 +71,7 @@ jobs:
 
 ### Inputs
 
-The action relies on the following parameters. 
+Tahe action relies on the following parameters. 
 
 - (Required) `github_token` is a GitHub Access Token used to access GitHub's API. The user account associated with the token is the one that will be seen as posting the checkDescription comment, adding and removing labels, and so on. If omitted, the standard token for the github-actions bot will be used.
 - (Optional) `tasks` allows for running selected tasks instead of the full suite. The value is a comma-separated list of task identifiers. You can find the list of the different tasks (and what event it's attached to) in `src/index.js`.
