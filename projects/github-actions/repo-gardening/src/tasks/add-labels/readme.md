@@ -13,7 +13,7 @@ Instead of having to manually add labels for each feature that is touched in a g
 
 Example:
 ```
-  ...
+  ...a
   with:
     # Required
     tasks: 'addLabels'
