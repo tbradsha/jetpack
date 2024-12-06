@@ -1,6 +1,7 @@
 const { getInput } = require( '@actions/core' );
 const debug = require( '../../utils/debug' );
 const getFiles = require( '../../utils/get-files' );
+const getLabels = require( '../../utils/labels/get-labels' );
 
 /* global GitHub, WebhookPayloadPullRequest */
 
@@ -320,7 +321,7 @@ async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert )
 }
 
 /**
- * Assigns any issues that are being worked to the author of the matching PR.
+ * Adds appropriate labels to the specified PR.
  *
  * @param {WebhookPayloadPullRequest} payload - Pull request event payload.
  * @param {GitHub}                    octokit - Initialized Octokit REST client.
@@ -336,20 +337,24 @@ async function addLabels( payload, octokit ) {
 	// If the PR title includes the word "revert", mark it as such.
 	const isRevert = title.toLowerCase().includes( 'revert' );
 
-	const labels = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert );
+	const currentLabels = payload.pull_request.labels;
 
-	if ( ! labels.length ) {
+	const labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert );
+
+	if ( ! labelsToAdd.length ) {
 		debug( 'add-labels: Could not find labels to add to that PR. Aborting' );
 		return;
 	}
+	console.log(currentLabels);
+	console.log(labelsToAdd);
 
-	debug( `add-labels: Adding labels ${ labels } to PR #${ number }` );
+	debug( `add-labels: Adding labels ${ labelsToAdd } to PR #${ number }` );
 
-	await octokit.rest.issues.addLabels( {
+	await octokit.rest.issues.setLabels( {
 		owner: owner.login,
 		repo: name,
 		issue_number: number,
-		labels,
+		labelsToAdd,
 	} );
 }
 
