@@ -346,8 +346,8 @@ async function addLabels( payload, octokit ) {
 		debug( 'add-labels: Could not find labels to add to that PR. Aborting' );
 		return;
 	}
-	debug(currentLabels);
-	debug(labelsToAdd);
+	console.log(currentLabels);
+	console.log(labelsToAdd);
 
 	debug( `add-labels: Adding labels ${ labelsToAdd } to PR #${ number }` );
 
