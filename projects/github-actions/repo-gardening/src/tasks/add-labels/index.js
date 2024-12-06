@@ -50,18 +50,19 @@ function cleanName( name ) {
 }
 
 /**
- * Build a list of labels to add to the issue, based off our file list.
+ * Build a list of labels to add to the pull request, based off our file list.
  *
- * @param {GitHub}  octokit  - Initialized Octokit REST client.
- * @param {string}  owner    - Repository owner.
- * @param {string}  repo     - Repository name.
- * @param {string}  number   - PR number.
- * @param {boolean} isDraft  - Whether the pull request is a draft.
- * @param {boolean} isRevert - Whether the pull request is a revert.
+ * @param {GitHub}  octokit     - Initialized Octokit REST client.
+ * @param {string}  owner       - Repository owner.
+ * @param {string}  repo        - Repository name.
+ * @param {string}  number      - PR number.
+ * @param {boolean} isDraft     - Whether the pull request is a draft.
+ * @param {boolean} isRevert    - Whether the pull request is a revert.
+ * @param {array} currentLabels - Current labels on the pull request.
  * @return {Promise<Array>} Promise resolving to an array of keywords we'll search for.
  */
-async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert ) {
-	const keywords = new Set();
+async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert, currentLabels ) {
+	const keywords = new Set( currentLabels );
 
 	// Get next valid milestone.
 	const files = await getFiles( octokit, owner, repo, number );
@@ -338,15 +339,12 @@ async function addLabels( payload, octokit ) {
 	const isRevert = title.toLowerCase().includes( 'revert' );
 
 	const currentLabels = payload.pull_request.labels.map( l => l.name );
-
-	const labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert );
+	const labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert, currentLabels );
 
 	if ( ! labelsToAdd.length ) {
 		debug( 'add-labels: Could not find labels to add to that PR. Aborting' );
 		return;
 	}
-	console.log(currentLabels);
-	console.log(labelsToAdd);
 
 	debug( `add-labels: Adding labels ${ labelsToAdd } to PR #${ number }` );
 
