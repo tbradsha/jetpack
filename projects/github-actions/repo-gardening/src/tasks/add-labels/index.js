@@ -319,7 +319,7 @@ async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert )
 
 	return [ ...keywords ];
 }
-
+/* this is a test */
 /**
  * Adds appropriate labels to the specified PR.
  *
