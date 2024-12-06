@@ -51,13 +51,13 @@ function cleanName( name ) {
 /**
  * Build a list of labels to add to the pull request, based off our file list.
  *
- * @param {GitHub}  octokit   - Initialized Octokit REST client.
- * @param {string}  owner     - Repository owner.
- * @param {string}  repo      - Repository name.
- * @param {string}  number    - PR number.
- * @param {boolean} isDraft   - Whether the pull request is a draft.
- * @param {boolean} isRevert  - Whether the pull request is a revert.
- * @param {array}   curLabels - Current labels on the pull request.
+ * @param {GitHub}   octokit   - Initialized Octokit REST client.
+ * @param {string}   owner     - Repository owner.
+ * @param {string}   repo      - Repository name.
+ * @param {string}   number    - PR number.
+ * @param {boolean}  isDraft   - Whether the pull request is a draft.
+ * @param {boolean}  isRevert  - Whether the pull request is a revert.
+ * @param {string[]} curLabels - Current labels on the pull request.
  * @return {Promise<Array>} Promise resolving to an array of keywords we'll search for.
  */
 async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert, curLabels ) {
@@ -338,9 +338,7 @@ async function addLabels( payload, octokit ) {
 	const isRevert = title.toLowerCase().includes( 'revert' );
 
 	const currentLabels = payload.pull_request.labels.map( l => l.name );
-	console.log(1,currentLabels);
 	let labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert, currentLabels );
-	console.log(2,labelsToAdd);
 
 	// Nothing new was added, so abort.
 	if ( labelsToAdd.length === currentLabels.length ) {
@@ -357,7 +355,6 @@ async function addLabels( payload, octokit ) {
 	} else if ( labelsToAdd.includes( bigLabel ) ) {
 		labelsToAdd = labelsToAdd.filter( label => label !== bigLabel );
 	}
-	console.log(3,labelsToAdd);
 
 	debug( `add-labels: Adding labels ${ labelsToAdd } to PR #${ number }` );
 
