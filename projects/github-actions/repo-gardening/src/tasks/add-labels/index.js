@@ -351,7 +351,7 @@ async function addLabels( payload, octokit ) {
 
 	// Limit to 90 labels to allow for additional labels elsewhere.
 	const bigLabel = 'All the things (90+ labels)';
-	if ( labelsToAdd.length > 90 ) {
+	if ( labelsToAdd.length > 2 ) {
 		debug( 'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first 90.' );
 		labelsToAdd.splice( 90 );
 		labelsToAdd.push( bigLabel );
