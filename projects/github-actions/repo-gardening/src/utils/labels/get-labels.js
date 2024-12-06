@@ -29,7 +29,6 @@ async function getLabels( octokit, owner, repo, number ) {
 		issue_number: +number,
 		per_page: 100,
 	} ) ) {
-		debug(response.data);
 		for ( const label of response.data ) {
 			labelList.push( label.name );
 		}
