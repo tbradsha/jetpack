@@ -339,12 +339,26 @@ async function addLabels( payload, octokit ) {
 	const isRevert = title.toLowerCase().includes( 'revert' );
 
 	const currentLabels = payload.pull_request.labels.map( l => l.name );
+	console.log(1,currentLabels);
 	const labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert, currentLabels );
+	console.log(2,labelsToAdd);
 
-	if ( ! labelsToAdd.length ) {
-		debug( 'add-labels: Could not find labels to add to that PR. Aborting' );
+	// Nothing new was added, so abort.
+	if ( labelsToAdd.length === currentLabels.length ) {
+		debug( 'add-labels: No new labels to add to that PR. Aborting.' );
 		return;
 	}
+
+	// Limit to 90 labels to allow for additional labels elsewhere.
+	const bigLabel = 'All the things (90+ labels)';
+	if ( labelsToAdd.length > 90 ) {
+		debug( 'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first 90.' );
+		labelsToAdd.splice( 90 );
+		labelsToAdd.push( bigLabel );
+	} else if ( labelsToAdd.includes( bigLabel ) ) {
+		labelsToAdd = labelsToAdd.filter( label => label !== bigLabel );
+	}
+	console.log(3,labelsToAdd);
 
 	debug( `add-labels: Adding labels ${ labelsToAdd } to PR #${ number }` );
 
