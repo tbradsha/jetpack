@@ -321,12 +321,13 @@ async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert )
 }
 
 /**
- * Assigns any issues that are being worked to the author of the matching PR.
+ * Adds appropriate labels to the specified PR.
  *
  * @param {WebhookPayloadPullRequest} payload - Pull request event payload.
  * @param {GitHub}                    octokit - Initialized Octokit REST client.
  */
 async function addLabels( payload, octokit ) {
+	console.log(payload);
 	const { number, repository, pull_request } = payload;
 	const { owner, name } = repository;
 	const { draft, title } = pull_request;
