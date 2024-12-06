@@ -14,6 +14,7 @@ const cache = {};
  * @return {Promise<Array>} Promise resolving to an array of all labels for that PR.
  */
 async function getLabels( octokit, owner, repo, number ) {
+	debug('fdsa');
 	const labelList = [];
 	const cacheKey = `${ owner }/${ repo } #${ number }`;
 	if ( cache[ cacheKey ] ) {
