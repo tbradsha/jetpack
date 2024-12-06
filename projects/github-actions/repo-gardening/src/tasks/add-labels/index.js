@@ -337,7 +337,7 @@ async function addLabels( payload, octokit ) {
 	// If the PR title includes the word "revert", mark it as such.
 	const isRevert = title.toLowerCase().includes( 'revert' );
 
-	const currentLabels = await getLabels( octokit, owner, repo, number );
+	const currentLabels = await getLabels( octokit, owner, repository, number );
 
 	const labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert );
 
