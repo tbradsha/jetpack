@@ -1,7 +1,6 @@
 const { getInput } = require( '@actions/core' );
 const debug = require( '../../utils/debug' );
 const getFiles = require( '../../utils/get-files' );
-const getLabels = require( '../../utils/labels/get-labels' );
 
 /* global GitHub, WebhookPayloadPullRequest */
 
@@ -52,17 +51,17 @@ function cleanName( name ) {
 /**
  * Build a list of labels to add to the pull request, based off our file list.
  *
- * @param {GitHub}  octokit     - Initialized Octokit REST client.
- * @param {string}  owner       - Repository owner.
- * @param {string}  repo        - Repository name.
- * @param {string}  number      - PR number.
- * @param {boolean} isDraft     - Whether the pull request is a draft.
- * @param {boolean} isRevert    - Whether the pull request is a revert.
- * @param {array} currentLabels - Current labels on the pull request.
+ * @param {GitHub}  octokit   - Initialized Octokit REST client.
+ * @param {string}  owner     - Repository owner.
+ * @param {string}  repo      - Repository name.
+ * @param {string}  number    - PR number.
+ * @param {boolean} isDraft   - Whether the pull request is a draft.
+ * @param {boolean} isRevert  - Whether the pull request is a revert.
+ * @param {array}   curLabels - Current labels on the pull request.
  * @return {Promise<Array>} Promise resolving to an array of keywords we'll search for.
  */
-async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert, currentLabels ) {
-	const keywords = new Set( currentLabels );
+async function getLabelsToAdd( octokit, owner, repo, number, isDraft, isRevert, curLabels ) {
+	const keywords = new Set( curLabels );
 
 	// Get next valid milestone.
 	const files = await getFiles( octokit, owner, repo, number );
@@ -340,7 +339,7 @@ async function addLabels( payload, octokit ) {
 
 	const currentLabels = payload.pull_request.labels.map( l => l.name );
 	console.log(1,currentLabels);
-	const labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert, currentLabels );
+	let labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert, currentLabels );
 	console.log(2,labelsToAdd);
 
 	// Nothing new was added, so abort.
@@ -351,7 +350,7 @@ async function addLabels( payload, octokit ) {
 
 	// Limit to 90 labels to allow for additional labels elsewhere.
 	const bigLabel = 'All the things (90+ labels)';
-	if ( labelsToAdd.length > 2 ) {
+	if ( labelsToAdd.length > 1 ) {
 		debug( 'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first 90.' );
 		labelsToAdd.splice( 90 );
 		labelsToAdd.push( bigLabel );
