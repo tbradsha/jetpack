@@ -338,7 +338,15 @@ async function addLabels( payload, octokit ) {
 	const isRevert = title.toLowerCase().includes( 'revert' );
 
 	const currentLabels = payload.pull_request.labels.map( l => l.name );
-	let labelsToAdd = await getLabelsToAdd( octokit, owner.login, name, number, isDraft, isRevert, currentLabels );
+	let labelsToAdd = await getLabelsToAdd(
+		octokit,
+		owner.login,
+		name,
+		number,
+		isDraft,
+		isRevert,
+		currentLabels
+	);
 
 	// Nothing new was added, so abort.
 	if ( labelsToAdd.length === currentLabels.length ) {
@@ -346,11 +354,16 @@ async function addLabels( payload, octokit ) {
 		return;
 	}
 
-	// Limit to 90 labels to allow for additional labels elsewhere.
-	const bigLabel = 'All the things (90+ labels)';
-	if ( labelsToAdd.length > 1 ) {
-		debug( 'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first 90.' );
-		labelsToAdd.splice( 90 );
+	// GitHub allows 100 labels on a PR. Limit to less than that to allow for additional labels elsewhere.
+	const maxLabels = 90;
+	const bigLabel = 'All the things (>' + maxLabels + ' labels)';
+	if ( labelsToAdd.length > maxLabels ) {
+		debug(
+			'add-labels: GitHub only allows 100 labels on a PR, so limiting to the first ' +
+				maxLabels +
+				'.'
+		);
+		labelsToAdd.splice( maxLabels );
 		labelsToAdd.push( bigLabel );
 	} else if ( labelsToAdd.includes( bigLabel ) ) {
 		labelsToAdd = labelsToAdd.filter( label => label !== bigLabel );
