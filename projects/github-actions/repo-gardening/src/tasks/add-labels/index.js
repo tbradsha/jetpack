@@ -353,7 +353,7 @@ async function addLabels( payload, octokit ) {
 
 	// Grab current labels on the PR.
 	// We can't rely on payload, as it could be outdated by the time this runs.
-	const currentLabels = await getLabels( octokit, owner, repository, number );
+	const currentLabels = await getLabels( octokit, owner.login, name, number );
 	const hasBigProjectLabel = currentLabels.includes( bigProjectLabel );
 
 	// This is an array of labels that GitHub doesn't already have.
@@ -389,8 +389,8 @@ async function addLabels( payload, octokit ) {
 		}
 	} else if ( hasBigProjectLabel ) {
 		await octokit.rest.issues.removeLabel( {
-			owner,
-			repo,
+			owner: owner.login,
+			name,
 			issue_number: number,
 			name: bigProjectLabel,
 		} );
