@@ -366,7 +366,7 @@ async function addLabels( payload, octokit ) {
 	}
 
 	// Determine how many labels can safely be added.
-	let maxLabelsToAdd = maxLabels - currentLabels.length;
+	let maxLabelsToAdd = Math.max( 0, maxLabels - currentLabels.length );
 
 	// Overkill, but let's prevent this label from counting toward the max.
 	if ( hasBigProjectLabel ) {
