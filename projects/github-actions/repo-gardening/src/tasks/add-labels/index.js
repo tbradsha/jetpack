@@ -333,7 +333,7 @@ async function addLabels( payload, octokit ) {
 
 	// GitHub allows 100 labels on a PR.
 	// Limit to less than that to allow a buffer for future manual labels.
-	const maxLabels = 3;
+	const maxLabels = 5;
 	const bigProjectLabel = '[Project] All the things!';
 
 	// Get labels to add to the PR.
