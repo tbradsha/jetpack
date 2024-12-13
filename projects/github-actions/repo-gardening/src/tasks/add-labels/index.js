@@ -354,7 +354,6 @@ async function addLabels( payload, octokit ) {
 	// Grab current labels on the PR.
 	// We can't rely on payload, as it could be outdated by the time this runs.
 	const currentLabels = await getLabels( octokit, owner.login, name, number );
-	const hasBigProjectLabel = currentLabels.includes( bigProjectLabel );
 
 	// This is an array of labels that GitHub doesn't already have.
 	let labelsToAdd = fileDerivedLabels.filter( label => ! currentLabels.includes( label ) );
@@ -369,6 +368,7 @@ async function addLabels( payload, octokit ) {
 	let maxLabelsToAdd = Math.max( 0, maxLabels - currentLabels.length );
 
 	// Overkill, but let's prevent this label from counting toward the max.
+	const hasBigProjectLabel = currentLabels.includes( bigProjectLabel );
 	if ( hasBigProjectLabel ) {
 		maxLabelsToAdd++;
 	}
@@ -390,7 +390,7 @@ async function addLabels( payload, octokit ) {
 	} else if ( hasBigProjectLabel ) {
 		await octokit.rest.issues.removeLabel( {
 			owner: owner.login,
-			name,
+			repo: name,
 			issue_number: number,
 			name: bigProjectLabel,
 		} );
