@@ -249,7 +249,7 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$this->assertEquals( $event_data->args[1], $enabled_slugs );
 	}
 
-	public function test_install_edit_delete_theme_sync() {
+	public function test_install_edit_delete_theme_syanc() {
 		$theme_slug = 'twentytwentyfour';
 		$theme_name = 'Twenty Twenty-Four';
 
@@ -262,6 +262,8 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$this->sender->do_sync();
 
 		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_installed_theme' );
+		echo 'asdf';
+		var_dump($event_data);
 
 		$this->assertEquals( $event_data->args[0], $theme_slug );
 		$this->assertEquals( $event_data->args[1]['name'], $theme_name );
