@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /**
  * Class WPCom_Themes_Api.
  * Retrieves themes from the WordPress.com themes API.
@@ -92,12 +92,16 @@ class WPCom_Themes_Api {
 	 * @return stdClass|null A WPCom theme object or null if not found.
 	 */
 	public function fetch_theme( string $slug ): ?stdClass {
+		error_log( var_export( 'fetch_theme', true ) );
+		error_log( var_export( $url, $slug ) );
 		$url = sprintf( self::WP_COM_THEME_API_URL, $slug );
+		error_log( var_export( $url, true ) );
 
 		$theme = $this->cache->run_cached(
 			'wpcom-themes-' . $slug,
 			fn() => $this->handle_request( $url )
 		);
+		error_log( var_export( $theme, true ) );
 
 		if ( ! $theme || isset( $theme->error ) ) {
 			return null;
