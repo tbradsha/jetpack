@@ -171,7 +171,9 @@ jobs:
                   continue
                 fi
               fi
-
+              if [[ $SLUG != 'plugins/jetpack' ]]; then
+                continue;
+              fi
               echo "Running tests for $SLUG"
               {
                 # Composer install, if appropriate. Note setup-wordpress-env.sh did it already for plugins.

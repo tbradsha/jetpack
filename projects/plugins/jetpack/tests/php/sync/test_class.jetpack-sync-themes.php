@@ -263,7 +263,7 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 
 		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_installed_theme' );
 		echo 'asdf';
-		var_dump($event_data);
+		var_dump( $event_data );
 
 		$this->assertEquals( $event_data->args[0], $theme_slug );
 		$this->assertEquals( $event_data->args[1]['name'], $theme_name );
@@ -484,8 +484,12 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		if ( is_wp_error( $api ) ) {
 			wp_die( $api );
 		}
+		error_log( var_export( 'api', true ) );
+		error_log( var_export( $api, true ) );
 
 		$upgrader = new Theme_Upgrader( new Silent_Upgrader_Skin() );
+		error_log( var_export( 'upgrader', true ) );
+		error_log( var_export( $upgrader, true ) );
 		add_filter( 'pre_http_request', array( 'WP_Test_Jetpack_Sync_Base', 'pre_http_request_wordpress_org_updates' ), 10, 3 );
 		$upgrader->install( $api->download_link, array( 'overwrite_package' => $overwrite ) );
 		remove_filter( 'pre_http_request', array( 'WP_Test_Jetpack_Sync_Base', 'pre_http_request_wordpress_org_updates' ) );
