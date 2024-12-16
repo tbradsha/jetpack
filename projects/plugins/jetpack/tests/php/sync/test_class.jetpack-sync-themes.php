@@ -304,8 +304,8 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 
 	public function test_install_edit_delete_theme_synac() {
 		error_log(var_export('test_install_edit_delete_theme_synac', true));
-		$theme_slug = 'twentytwentyfour';
-		$theme_name = 'Twenty Twenty-Four';
+		$theme_slug = 'astra';
+		$theme_name = 'Astra';
 
 		delete_theme( $theme_slug ); // Ensure theme is not lingering on file system
 		$this->server_event_storage->reset();
