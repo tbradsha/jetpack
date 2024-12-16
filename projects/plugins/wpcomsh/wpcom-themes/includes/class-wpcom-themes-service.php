@@ -126,9 +126,7 @@ class WPCom_Themes_Service {
 	 * @return stdClass|null The theme object if found, null otherwise.
 	 */
 	public function get_theme( string $slug ): ?stdClass {
-		error_log( var_export( $slug, true ) );
 		$wpcom_theme = $this->api->fetch_theme( $slug );
-		error_log( var_export( $wpcom_theme, true ) );
 
 		if ( ! $wpcom_theme ) {
 			return null;
