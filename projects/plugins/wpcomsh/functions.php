@@ -222,7 +222,6 @@ function wpcomsh_count_child_themes( $template ) {
  * @return bool|WP_Error
  */
 function wpcomsh_symlink_parent_theme( $stylesheet ) {
-	error_log(var_export('wpcomsh_symlink_parent_theme', true));
 	$theme    = wp_get_theme( $stylesheet );
 	$template = $theme->get_template();
 

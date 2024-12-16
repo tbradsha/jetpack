@@ -535,11 +535,12 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 			)
 		);
 		$overwrite = '';
+		error_log(var_export('$api', true));
+		error_log(var_export(!!$api, true));
 
 		if ( is_wp_error( $api ) ) {
 			wp_die( $api );
 		}
-		error_log(var_export($api, true));
 
 		$upgrader = new Theme_Upgrader( new Silent_Upgrader_Skin() );
 		add_filter( 'pre_http_request', array( 'WP_Test_Jetpack_Sync_Base', 'pre_http_request_wordpress_org_updates' ), 10, 3 );
