@@ -49,11 +49,11 @@ EXIT=0
 for PLUGIN in projects/plugins/*/composer.json; do
 	DIR="${PLUGIN%/composer.json}"
 	NAME="$(basename "$DIR")"
-
-	echo "::group::Installing plugin $NAME into WordPress"
-	if [[ $NAME != 'jetpack' || $NAME != 'wpcomsh' ]]; then
+	if [[ $NAME != 'jetpack' && $NAME != 'wpcomsh' ]]; then
 		continue;
 	fi
+
+	echo "::group::Installing plugin $NAME into WordPress"
 
 	if php -r 'exit( preg_match( "/^>=\\s*(\\d+\\.\\d+)$/", $argv[1], $m ) && version_compare( PHP_VERSION, $m[1], "<" ) ? 0 : 1 );' "$( jq -r '.require.php // ""' "$DIR/composer.json" )"; then
 		echo "::endgroup::"
