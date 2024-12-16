@@ -93,7 +93,7 @@ class WPCom_Themes_Api {
 	 */
 	public function fetch_theme( string $slug ): ?stdClass {
 		error_log( var_export( 'fetch_theme', true ) );
-		error_log( var_export( $url, $slug ) );
+		error_log( var_export( $slug, true ) );
 		$url = sprintf( self::WP_COM_THEME_API_URL, $slug );
 		error_log( var_export( $url, true ) );
 
