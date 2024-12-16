@@ -249,6 +249,57 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$this->assertEquals( $event_data->args[1], $enabled_slugs );
 	}
 
+	public function test_install_edit_delete_theme_sync() {
+		$theme_slug = 'itek';
+		$theme_name = 'iTek';
+
+		delete_theme( $theme_slug ); // Ensure theme is not lingering on file system
+		$this->server_event_storage->reset();
+
+		// Test Install Theme
+
+		$this->install_theme( $theme_slug );
+		$this->sender->do_sync();
+
+		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_installed_theme' );
+		echo 'asdf';
+		var_dump( $event_data );
+
+		$this->assertEquals( $event_data->args[0], $theme_slug );
+		$this->assertEquals( $event_data->args[1]['name'], $theme_name );
+		$this->assertTrue( (bool) $event_data->args[1]['version'] );
+		$this->assertTrue( (bool) $event_data->args[1]['uri'] );
+
+		// Test Edit Theme
+
+		/**
+		 * This filter is already documented in wp-includes/pluggable.php
+		 *
+		 * @since 1.5.1
+		 */
+		$_POST['newcontent'] = 'foo';
+		apply_filters( 'wp_redirect', 'theme-editor.php?file=style.css&theme=' . $theme_slug . '&scrollto=0&updated=true' );
+		$this->sender->do_sync();
+
+		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_edited_theme' );
+
+		$this->assertEquals( $event_data->args[0], $theme_slug );
+		$this->assertEquals( $event_data->args[1]['name'], $theme_name );
+		$this->assertTrue( (bool) $event_data->args[1]['version'] );
+		$this->assertTrue( (bool) $event_data->args[1]['uri'] );
+
+		unset( $_POST['newcontent'] );
+
+		// Test Delete Theme
+
+		delete_theme( $theme_slug );
+		$this->sender->do_sync();
+
+		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_deleted_theme' );
+
+		$this->assertEquals( $theme_slug, $event_data->args[0] );
+	}
+
 	public function test_install_edit_delete_theme_syanc() {
 		$theme_slug = 'twentytwentyfour';
 		$theme_name = 'Twenty Twenty-Four';
@@ -297,7 +348,7 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 
 		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_deleted_theme' );
 
-		$this->assertEquals( 'twentytwentyfour', $event_data->args[0] );
+		$this->assertEquals( $theme_slug, $event_data->args[0] );
 	}
 
 	public function test_update_themes_sync() {
@@ -484,12 +535,8 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		if ( is_wp_error( $api ) ) {
 			wp_die( $api );
 		}
-		error_log( var_export( 'api', true ) );
-		error_log( var_export( $api, true ) );
 
 		$upgrader = new Theme_Upgrader( new Silent_Upgrader_Skin() );
-		error_log( var_export( 'upgrader', true ) );
-		error_log( var_export( $upgrader, true ) );
 		add_filter( 'pre_http_request', array( 'WP_Test_Jetpack_Sync_Base', 'pre_http_request_wordpress_org_updates' ), 10, 3 );
 		$upgrader->install( $api->download_link, array( 'overwrite_package' => $overwrite ) );
 		remove_filter( 'pre_http_request', array( 'WP_Test_Jetpack_Sync_Base', 'pre_http_request_wordpress_org_updates' ) );
