@@ -147,6 +147,9 @@ jobs:
             if [[ "${SLUG%%/*}" != "plugins" ]]; then
               continue;
             fi
+            if [[ $SLUG != "plugins/jetpack" && $SLUG != "plugins/wpcomsh" ]]; then
+              continue
+            fi
             if [[ "${SLUG%%/*}" != "plugins" && "$WP_BRANCH" != 'latest' && "$WP_BRANCH" != 'none' && "$FORCE_PACKAGE_TESTS" != "true" ]]; then
               echo "Skipping $SLUG, only plugins run for WP_BRANCH = $WP_BRANCH"
               continue

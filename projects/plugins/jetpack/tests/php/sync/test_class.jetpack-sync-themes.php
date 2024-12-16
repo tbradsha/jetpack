@@ -253,12 +253,15 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$theme_slug = 'itek';
 		$theme_name = 'iTek';
 
+		error_log(var_export('delete_theme', true));
 		delete_theme( $theme_slug ); // Ensure theme is not lingering on file system
+		error_log(var_export('end_delete_theme', true));
 		$this->server_event_storage->reset();
 
 		// Test Install Theme
-
+		error_log(var_export('install_theme', true));
 		$this->install_theme( $theme_slug );
+		error_log(var_export('end_install_theme', true));
 		$this->sender->do_sync();
 
 		$event_data = $this->server_event_storage->get_most_recent_event( 'jetpack_installed_theme' );
