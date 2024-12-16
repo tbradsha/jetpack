@@ -254,9 +254,7 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$theme_slug = 'itek';
 		$theme_name = 'iTek';
 
-		error_log(var_export('delete_theme', true));
 		delete_theme( $theme_slug ); // Ensure theme is not lingering on file system
-		error_log(var_export('end_delete_theme', true));
 		$this->server_event_storage->reset();
 
 		// Test Install Theme
@@ -309,9 +307,7 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$theme_slug = 'twentytwentyfour';
 		$theme_name = 'Twenty Twenty-Four';
 
-		error_log(var_export('delete_theme', true));
 		delete_theme( $theme_slug ); // Ensure theme is not lingering on file system
-		error_log(var_export('end_delete_theme', true));
 		$this->server_event_storage->reset();
 
 		// Test Install Theme
@@ -543,6 +539,7 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		if ( is_wp_error( $api ) ) {
 			wp_die( $api );
 		}
+		error_log(var_export($api, true));
 
 		$upgrader = new Theme_Upgrader( new Silent_Upgrader_Skin() );
 		add_filter( 'pre_http_request', array( 'WP_Test_Jetpack_Sync_Base', 'pre_http_request_wordpress_org_updates' ), 10, 3 );

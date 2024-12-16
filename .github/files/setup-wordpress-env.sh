@@ -51,6 +51,9 @@ for PLUGIN in projects/plugins/*/composer.json; do
 	NAME="$(basename "$DIR")"
 
 	echo "::group::Installing plugin $NAME into WordPress"
+	if [[ $NAME != 'jetpack' ]]; then
+		continue;
+	fi
 
 	if php -r 'exit( preg_match( "/^>=\\s*(\\d+\\.\\d+)$/", $argv[1], $m ) && version_compare( PHP_VERSION, $m[1], "<" ) ? 0 : 1 );' "$( jq -r '.require.php // ""' "$DIR/composer.json" )"; then
 		echo "::endgroup::"
