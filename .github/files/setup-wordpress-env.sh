@@ -51,7 +51,7 @@ for PLUGIN in projects/plugins/*/composer.json; do
 	NAME="$(basename "$DIR")"
 
 	echo "::group::Installing plugin $NAME into WordPress"
-	if [[ $NAME != 'jetpack' ]]; then
+	if [[ $NAME != 'jetpack' || $NAME != 'wpcomsh' ]]; then
 		continue;
 	fi
 
