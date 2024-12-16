@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 
 use Automattic\Jetpack\Sync\Defaults;
 use Automattic\Jetpack\Sync\Modules;
@@ -300,9 +300,9 @@ class WP_Test_Jetpack_Sync_Themes extends WP_Test_Jetpack_Sync_Base {
 		$this->assertEquals( $theme_slug, $event_data->args[0] );
 	}
 
-	public function test_install_edit_delete_theme_syanc() {
-		$theme_slug = 'twentytwentyfour';
-		$theme_name = 'Twenty Twenty-Four';
+	public function test_install_edit_delete_theme_synac() {
+		$theme_slug = 'itek';
+		$theme_name = 'iTek';
 
 		delete_theme( $theme_slug ); // Ensure theme is not lingering on file system
 		$this->server_event_storage->reset();

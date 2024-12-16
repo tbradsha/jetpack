@@ -12,8 +12,8 @@
  * @return bool
  */
 function wpcomsh_is_wpcom_theme( $theme_slug ) {
-	error_log( var_export( 'wpcomsh_is_wpcom_theme', true ) );
-	error_log( var_export( $theme_slug, true ) );
+	var_dump( 'wpcomsh_is_wpcom_theme' );
+	var_dump( $theme_slug );
 	return wpcomsh_is_wpcom_premium_theme( $theme_slug ) || wpcomsh_is_wpcom_pub_theme( $theme_slug );
 }
 
@@ -24,9 +24,9 @@ function wpcomsh_is_wpcom_theme( $theme_slug ) {
  * @return bool
  */
 function wpcomsh_is_wpcom_premium_theme( $theme_slug ) {
-	error_log( var_export( 'wpcomsh_is_wpcom_premium_theme', true ) );
-	error_log( var_export( $theme_slug, true ) );
-	error_log( var_export( WPCOMSH_PREMIUM_THEMES_PATH, true ) );
+	var_dump( 'wpcomsh_is_wpcom_premium_theme' );
+	var_dump( $theme_slug );
+	var_dump( WPCOMSH_PREMIUM_THEMES_PATH );
 	if (
 		! defined( 'WPCOMSH_PREMIUM_THEMES_PATH' ) ||
 		! file_exists( WPCOMSH_PREMIUM_THEMES_PATH )
@@ -52,9 +52,9 @@ function wpcomsh_is_wpcom_premium_theme( $theme_slug ) {
  * @return bool
  */
 function wpcomsh_is_wpcom_pub_theme( $theme_slug ) {
-	error_log( var_export( 'wpcomsh_is_wpcom_pub_theme', true ) );
-	error_log( var_export( $theme_slug, true ) );
-	error_log( var_export( WPCOMSH_PUB_THEMES_PATH, true ) );
+	var_dump( 'wpcomsh_is_wpcom_pub_theme' );
+	var_dump( $theme_slug );
+	var_dump( WPCOMSH_PUB_THEMES_PATH );
 	if (
 		! defined( 'WPCOMSH_PUB_THEMES_PATH' ) ||
 		! file_exists( WPCOMSH_PUB_THEMES_PATH )

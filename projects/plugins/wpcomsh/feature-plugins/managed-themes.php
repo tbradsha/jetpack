@@ -126,7 +126,7 @@ add_filter( 'jetpack_wpcom_theme_skip_download', 'wpcomsh_jetpack_wpcom_theme_sk
  * @return bool
  */
 function wpcomsh_jetpack_wpcom_theme_delete( $use_alternative_delete_method, $theme_slug ) {
-	error_log( var_export( 'deleting', true ) ); // phpcs:ignore 
+	var_dump( 'deleting' ); // phpcs:ignore 
 	if ( ! wpcomsh_is_wpcom_theme( $theme_slug ) || ! wpcomsh_is_theme_symlinked( $theme_slug ) ) {
 		return false;
 	}
