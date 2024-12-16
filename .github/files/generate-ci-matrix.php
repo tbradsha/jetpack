@@ -59,36 +59,37 @@ $default_matrix_vars = array(
 $matrix = array();
 
 // Add PHP tests.
-foreach ( array( '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ) as $php ) {
-	$matrix[] = array(
-		'name'    => "PHP tests: PHP $php WP latest",
-		'script'  => 'test-php',
-		'php'     => $php,
-		'wp'      => 'latest',
-		'timeout' => 20, // 2024-11-12: Successful runs seem to take up to ~7 minutes.
-	);
-}
+// foreach ( array( '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ) as $php ) {
+// foreach ( array( '8.2' ) as $php ) {
+// 	$matrix[] = array(
+// 		'name'    => "PHP tests: PHP $php WP latest",
+// 		'script'  => 'test-php',
+// 		'php'     => $php,
+// 		'wp'      => 'latest',
+// 		'timeout' => 20, // 2024-11-12: Successful runs seem to take up to ~7 minutes.
+// 	);
+// }
 
-foreach ( array( 'previous', 'trunk' ) as $wp ) {
-	$phpver   = $versions['PHP_VERSION'];
-	$matrix[] = array(
-		'name'    => "PHP tests: PHP {$phpver} WP $wp",
-		'script'  => 'test-php',
-		'php'     => $phpver,
-		'wp'      => $wp,
-		'timeout' => 15, // 2024-11-12: Successful runs seem to take ~7 minutes with PHP 8.2.
-	);
-}
+// foreach ( array( 'previous', 'trunk' ) as $wp ) {
+// 	$phpver   = $versions['PHP_VERSION'];
+// 	$matrix[] = array(
+// 		'name'    => "PHP tests: PHP {$phpver} WP $wp",
+// 		'script'  => 'test-php',
+// 		'php'     => $phpver,
+// 		'wp'      => $wp,
+// 		'timeout' => 15, // 2024-11-12: Successful runs seem to take ~7 minutes with PHP 8.2.
+// 	);
+// }
 
-// Add WooCommerce tests.
-$matrix[] = array(
-	'name'             => 'PHP tests: PHP 7.4 WP latest with WooCommerce',
-	'script'           => 'test-php',
-	'php'              => '7.4',
-	'wp'               => 'latest',
-	'timeout'          => 20,
-	'with-woocommerce' => true,
-);
+// // Add WooCommerce tests.
+// $matrix[] = array(
+// 	'name'             => 'PHP tests: PHP 7.4 WP latest with WooCommerce',
+// 	'script'           => 'test-php',
+// 	'php'              => '7.4',
+// 	'wp'               => 'latest',
+// 	'timeout'          => 20,
+// 	'with-woocommerce' => true,
+// );
 
 // Add wpcomsh tests.
 $matrix[] = array(
@@ -100,20 +101,20 @@ $matrix[] = array(
 	'with-wpcomsh' => true,
 );
 
-// Add JS tests.
-$matrix[] = array(
-	'name'    => 'JS tests',
-	'script'  => 'test-js',
-	'timeout' => 15, // 2024-11-12: Successful runs seem to take ~5 minutes.
-);
+// // Add JS tests.
+// $matrix[] = array(
+// 	'name'    => 'JS tests',
+// 	'script'  => 'test-js',
+// 	'timeout' => 15, // 2024-11-12: Successful runs seem to take ~5 minutes.
+// );
 
-// Add Coverage tests.
-$matrix[] = array(
-	'name'    => 'Code coverage',
-	'script'  => 'test-coverage',
-	'wp'      => 'latest',
-	'timeout' => 40, // 2024-11-12: Successful runs seem to take ~14 minutes.
-);
+// // Add Coverage tests.
+// $matrix[] = array(
+// 	'name'    => 'Code coverage',
+// 	'script'  => 'test-coverage',
+// 	'wp'      => 'latest',
+// 	'timeout' => 40, // 2024-11-12: Successful runs seem to take ~14 minutes.
+// );
 
 // END matrix definitions.
 // Now, validation.

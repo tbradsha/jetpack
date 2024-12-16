@@ -145,6 +145,9 @@ function _manually_load_muplugin() {
 	if ( ! is_dir( WPCOMSH_PREMIUM_THEMES_PATH ) ) {
 		mkdir( WPCOMSH_PREMIUM_THEMES_PATH, 0777 );
 	}
+	echo 'WPCOMSH_PREMIUM_THEMES_PATH';
+	echo WPCOMSH_PREMIUM_THEMES_PATH;
+	var_dump( scandir( WPCOMSH_PREMIUM_THEMES_PATH ) );
 }
 
 // If we are running the uninstall tests don't load jetpack.

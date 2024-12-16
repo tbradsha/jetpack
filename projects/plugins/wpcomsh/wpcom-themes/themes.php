@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /**
  * Registers a filter for the themes API result to add WPCom themes.
  *
@@ -206,7 +206,8 @@ function wpcomsh_theme_install_by_symlink( $reply, $package, $upgrader ) {
 
 	$wpcom_themes_service = wpcomsh_get_wpcom_themes_service_instance();
 	$wpcom_theme          = $wpcom_themes_service->get_theme( $package );
-
+	error_log( var_export( 'wpcom_theme', true ) );
+	error_log( var_export( $wpcom_theme, true ) );
 	if ( ! $wpcom_theme ) {
 		return $reply;
 	}

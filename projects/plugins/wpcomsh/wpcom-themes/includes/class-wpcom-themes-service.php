@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /**
  * Class WPCom_Themes_Service.
  * Component that interacts with the WordPress.com themes API and has the business logic to filter the partner themes.

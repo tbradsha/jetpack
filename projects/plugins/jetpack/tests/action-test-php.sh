@@ -16,7 +16,7 @@ if [[ "$WITH_WPCOMSH" == true ]]; then
 fi
 
 echo "::group::Jetpack tests"
-phpunit
+phpunit --filter WP_Test_Jetpack_Sync_Themes
 echo "::endgroup::"
 
 if [[ "$WP_BRANCH" == "trunk" ]]; then

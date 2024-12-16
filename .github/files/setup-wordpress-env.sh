@@ -49,6 +49,9 @@ EXIT=0
 for PLUGIN in projects/plugins/*/composer.json; do
 	DIR="${PLUGIN%/composer.json}"
 	NAME="$(basename "$DIR")"
+	if [[ $NAME != 'jetpack' && $NAME != 'wpcomsh' ]]; then
+		continue;
+	fi
 
 	echo "::group::Installing plugin $NAME into WordPress"
 
