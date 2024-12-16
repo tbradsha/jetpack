@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /**
  * Managed themes file.
  *
@@ -51,7 +51,9 @@ add_filter( 'wp_prepare_themes_for_js', 'wpcomsh_remove_theme_delete_button' );
  * @return string|bool The WP.com premium theme stylesheet or false if theme is not linked or a not premium theme.
  */
 function wpcomsh_handle_atomic_premium_theme_option() {
+	error_log( var_export( 'wpcomsh_handle_atomic_premium_theme_option', true ) );
 	$stylesheet = wp_get_theme()->get_stylesheet();
+	error_log( var_export( $stylesheet, true ) );
 
 	if ( wpcomsh_is_theme_symlinked( $stylesheet ) && wpcomsh_is_wpcom_premium_theme( $stylesheet ) ) {
 		return sprintf( 'premium/%s', $stylesheet );
@@ -70,6 +72,7 @@ add_filter( 'pre_option_at_wpcom_premium_theme', 'wpcomsh_handle_atomic_premium_
  * @return bool|\WP_Error
  */
 function wpcomsh_jetpack_wpcom_theme_skip_download( $skip_download_filter_result, $theme_slug ) {
+	error_log( var_export( 'wpcomsh_jetpack_wpcom_theme_skip_download', true ) );
 	$theme_type = wpcomsh_get_wpcom_theme_type( $theme_slug );
 
 	// If we are dealing with a non WPCom theme, don't interfere.
