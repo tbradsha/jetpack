@@ -1,0 +1,26 @@
+name: Checkout SHA test
+on: pull_request
+jobs:
+  first:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - run: |
+          echo "GITHUB_SHA=$GITHUB_SHA"
+          echo "HEAD=$( git rev-parse HEAD )"
+          git ls-remote origin "refs/pull/$PR/merge"
+          sleep 120
+        env:
+          PR: ${{ github.event.number }}
+  second:
+    needs: first
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - run: |
+          echo "GITHUB_SHA=$GITHUB_SHA"
+          echo "HEAD=$( git rev-parse HEAD )"
+          echo "HEAD parents: $( git log -1 --format=%P HEAD )"
+          git ls-remote origin "refs/pull/$PR/merge"
+        env:
+          PR: ${{ github.event.number }}
