@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a50c9778c01ca79f2139f755526b370",
+    "content-hash": "10a9b5bc48bcaae82bc376392d8b5448",
     "packages": [
         {
             "name": "automattic/block-delimiter",
