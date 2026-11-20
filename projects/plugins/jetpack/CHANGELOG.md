@@ -2,6 +2,10 @@
 
 ### This is a list detailing changes for all Jetpack releases.
 
+## 16.5.1 - 2026-11-20
+### Bug fixes
+- Forms: Match the whole email address when exporting or erasing personal data, so addresses that only share a prefix are no longer included.
+
 ## 16.5-a.3 - 2026-11-16
 ### Enhancements
 - Blogroll: Add a feed URL setting to each blogroll item. [#54746]
